@@ -99,11 +99,10 @@ def predictor(
 
     service.start(timeout=10)  # should be a NOP if already started
     data = json.loads(data)
-    data.pop("columns")
-    data.pop("index")
+    data.pop("columns",None)
+    data.pop("index",None)
     columns_for_df = [
           'age', 
-          'death',
           'sex', 
           'slos', 
           'd.time', 
@@ -122,7 +121,7 @@ def predictor(
             'temp',
             'crea', 
             'sod', 
-            'adlsc'
+            'adlsc',
         
     ]
     df = pd.DataFrame(data["data"], columns=columns_for_df)

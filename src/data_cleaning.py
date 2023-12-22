@@ -26,6 +26,13 @@ class DataPreProcessStrategy(DataStrategy):
         Preprocessing data
         """
         try:
+            data["race"].fillna(data["race"].mode(),inplace=True)
+            data["charges"].fillna(data["charges"].median(),inplace=True)
+            data["totcst"].fillna(data["totcst"].median(),inplace=True)
+            data["avtisst"].fillna(data["avtisst"].median(),inplace=True)
+            data["wblc"].fillna(data["wblc"].median(),inplace=True)
+            data["crea"].fillna(data["crea"].median(),inplace=True) 
+
             # Set the threshold for null values (e.g., 15%)
             null_threshold = 0.15
 
@@ -36,20 +43,14 @@ class DataPreProcessStrategy(DataStrategy):
             columns_to_drop = null_percentages[null_percentages > null_threshold].index.tolist()
 
             # Drop selected columns and return the modified DataFrame
-            data = data.drop(columns=columns_to_drop)
-
-            data["race"].fillna(data["race"].mode(),inplace=True)
-            data["charges"].fillna(data["charges"].median(),inplace=True)
-            data["totcst"].fillna(data["totcst"].median(),inplace=True)
-            data["avtisst"].fillna(data["avtisst"].median(),inplace=True)
-            data["wblc"].fillna(data["wblc"].median(),inplace=True)
-            data["crea"].fillna(data["crea"].median(),inplace=True)  
-            # data = data.drop(
-            #     [
-            #         "hospdead"
+            data = data.drop(columns=columns_to_drop) 
+            
+            data = data.drop(
+                [
+                    "hospdead"
                    
-            #     ],axis=1
-            # )
+                ],axis=1
+            )
             data=data.dropna()
             le = LabelEncoder()
             data['sex'] = le.fit_transform(data['sex'])
