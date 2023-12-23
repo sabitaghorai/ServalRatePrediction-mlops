@@ -99,8 +99,8 @@ def predictor(
 
     service.start(timeout=10)  # should be a NOP if already started
     data = json.loads(data)
-    data.pop("columns",None)
-    data.pop("index",None)
+    data.pop("columns")
+    data.pop("index")
     columns_for_df = [
           'age', 
           'sex', 
@@ -111,18 +111,17 @@ def predictor(
           'num.co',
           'scoma', 
           'charges',
-            'totcst', 
-            'avtisst', 
-            'race', 
-            'meanbp',
-            'wblc',
-            'hrt', 
-            'resp', 
-            'temp',
-            'crea', 
-            'sod', 
-            'adlsc',
-        
+          'totcst', 
+          'avtisst', 
+          'race', 
+          'meanbp',
+          'wblc',
+          'hrt', 
+          'resp', 
+          'temp',
+          'crea', 
+          'sod', 
+          'adlsc', 
     ]
     df = pd.DataFrame(data["data"], columns=columns_for_df)
     json_list = json.loads(json.dumps(list(df.T.to_dict().values())))
